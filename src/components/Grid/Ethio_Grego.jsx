@@ -45,7 +45,10 @@ const Ethio_Grego = () => {
 
   const getMaxDays = (selectedMonth) => {
     if (selectedMonth === 13) {
-      return 6;
+      if(y %4 === 3){
+        return 6;
+      }
+      return 5;
     } else {
       return 30;
     }

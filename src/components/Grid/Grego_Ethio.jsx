@@ -4,17 +4,16 @@ import useETG from "../Hooks/useETG";
 import useGTE from "../Hooks/useGTE";
 import useSound from "use-sound";
 import buttonSound from "/src/Click.wav"; // Update with the actual path to your sound file
-import buttonSound1 from "/src/Click2.wav"; 
+import buttonSound1 from "/src/Click2.wav";
 
 const Grego_Ethio = () => {
-  
   const [play1] = useSound(buttonSound, { volume: 0.1 });
   const [play2] = useSound(buttonSound1, { volume: 0.01 });
   const [gregorianDate, setGregorianDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
   let [y, m, d] = gregorianDate.split("-").map(Number);
-  const [etDay, Ed, Em, Ey,EM] = useGTE(y, m, d);
+  const [etDay, Ed, Em, Ey, EM] = useGTE(y, m, d);
   const [ethiopianDate, setEthiopianDate] = useState("");
   const handleConvert = (e) => {
     play1();
@@ -26,11 +25,14 @@ const Grego_Ethio = () => {
   const convertToEthiopian = (convertedDate) => {
     setEthiopianDate(`/${Ed}-${Em}-${Ey}`);
   };
-  const [gregDay, gregd, gregm, gregy] = useETG(Ed, EM, Ey);
+  const [cetDay, cEd, cEm, cEy, cEM] = useGTE();
+  const [gregDay, gregd, gregm, gregy] = useETG(cEd, cEM, cEy);
   return (
     <>
       <div className="rounded-xl text-center mb-8  mx-3 bg-gray-300 font-bold border border-black shadow-4xl ">
-        <h2 className=" text-lg">Current GC:{gregDay} /{gregd}-{gregm}-{gregy}</h2>
+        <h2 className=" text-lg">
+          Current GC:{gregDay} /{gregd}-{gregm}-{gregy}
+        </h2>
       </div>
 
       <div className="bg-slate-300  rounded-lg shadow-xl p-4 mx-3 border-2 border-white-100">
@@ -47,7 +49,11 @@ const Grego_Ethio = () => {
             onChange={(e) => setGregorianDate(e.target.value)}
           />
 
-          <button className="text-lg EtGbtn rounded-lg" onClick={handleConvert} onMouseMove={play2}>
+          <button
+            className="text-lg EtGbtn rounded-lg"
+            onClick={handleConvert}
+            onMouseMove={play2}
+          >
             Convert
           </button>
         </form>
